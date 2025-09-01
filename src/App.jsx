@@ -150,20 +150,26 @@ function App() {
     }
   }
 
-  function handleSwipe(id) {
-    setWordData(prev =>
-      prev.map(paragraph =>
-        paragraph.map(word => {
-          if (word.id !== id) return word;
-          return {
-            ...word,
-            showFurigana: !word.showFurigana || !word.showTranslation ? true : false,
-            showTranslation: !word.showTranslation,
-          };
-        })
-      )
-    );
-  }
+   function handleSwipe(id) {
+  setWordData(prev =>
+    prev.map(paragraph =>
+      paragraph.map(word => {
+        if (word.id !== id) return word; // leave others untouched
+
+        // Here you have the clicked word object
+        if (word.showFurigana && word.showTranslation) {
+          return { ...word, showFurigana: false, showTranslation: false };
+        } else if (!word.showFurigana && word.showTranslation) {
+          return { ...word, showFurigana: true };
+        } else if (word.showFurigana && !word.showTranslation) {
+          return { ...word, showTranslation: true };
+        } else {
+          return { ...word, showFurigana: true };
+        }
+      })
+    )
+  );
+}
 
   const handleNextPage = () => {
     if ((currentPage + 1) * pageSizeCharacter < totalLength) {
