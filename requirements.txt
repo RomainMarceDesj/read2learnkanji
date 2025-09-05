@@ -2,4 +2,4 @@ flask
 flask-cors
 sudachipy
 PyPDF2
-python-docx 
+python-docx
